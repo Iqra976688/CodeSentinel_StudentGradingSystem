@@ -1,37 +1,75 @@
-
 #include <iostream>
+#include <iomanip> // for table formatting
 using namespace std;
+
 int main()
 {
-	int n;
-	string sub[3] = {};
-	int marks[3] = {};
-	cout << "Enter the number of students to calculate their average marks:";
-	cin >> n;
-	for (int i = 1;i <= n;i++)
-	{
-		cout << "Enter the name of three subjects to calculate average: ";
-		cin >> sub[0] >> sub[1] >> sub[2];
-		cout << "Enter the marks of " << sub[0] << ": ";
-		cin >> marks[0];
-		cout << "Enter the marks of " << sub[1] << ": ";
-		cin >> marks[1];
-		cout << "Enter the marks of " << sub[2] << ": ";
-		cin >> marks[2];
-		int avg = (marks[0] + marks[1] + marks[2]) / 3;
-		cout << "The average marks of student " << i << " is: " << avg << endl;
-		if(avg >= 90)
-			cout << "Grade: A" << endl;
-		else if(avg >= 80)
-			cout << "Grade: B" << endl;
-		else if(avg >= 70)
-			cout << "Grade: C" << endl;
-		else if(avg >= 60)
-			cout << "Grade: D" << endl;
-		else
-			cout << "Grade: F" << endl;
-		cout << "----------------------------------------" << endl;
+    int n;
+    cout << " Welcome to the Student Grade Calculator " << endl;
+    cout << "--------------------------------------------------" << endl;
 
-	}
-	return 0;
+    cout << "How many students do you want to enter? ";
+    cin >> n;
+
+    string names[100];   // store student names
+    int marks[100][3];   // store 3 marks for each student
+    int avg[100];        // store averages
+    string grade[100];   // store grades
+
+    // Input section
+    for (int i = 0; i < n; i++)
+    {
+        cout << " Enter details for student " << (i + 1) << endl;
+        cout << "Name: ";
+        cin >> names[i];
+
+        int sum = 0;
+        for (int j = 0; j < 3; j++)
+        {
+            cout << "Marks in Subject " << (j + 1) << ": ";
+            cin >> marks[i][j];
+            sum += marks[i][j];
+        }
+
+        avg[i] = sum / 3;
+
+        // grading system
+        if (avg[i] >= 90)
+            grade[i] = "A";
+        else if (avg[i] >= 75)
+            grade[i] = "B";
+        else if (avg[i] >= 60)
+            grade[i] = "C";
+        else
+            grade[i] = "Fail";
+
+        cout << " Record saved for " << names[i] << "." << endl;
+        cout << "--------------------------------------------------" << endl;
+    }
+
+    // Final summary table
+    cout << "\n Student Performance Summary" << endl;
+    cout << "--------------------------------------------------" << endl;
+    cout << left << setw(15) << "Name"
+         << setw(10) << "Subj1"
+         << setw(10) << "Subj2"
+         << setw(10) << "Subj3"
+         << setw(10) << "Average"
+         << setw(10) << "Grade" << endl;
+    cout << "--------------------------------------------------" << endl;
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << left << setw(15) << names[i]
+             << setw(10) << marks[i][0]
+             << setw(10) << marks[i][1]
+             << setw(10) << marks[i][2]
+             << setw(10) << avg[i]
+             << setw(10) << grade[i] << endl;
+    }
+
+    cout << "--------------------------------------------------" << endl;
+    cout << " All student records processed successfully." << endl;
+
+    return 0;
 }
